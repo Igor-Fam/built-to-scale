@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ct5utfw1yes50"]
+[gd_scene load_steps=25 format=3 uid="uid://ct5utfw1yes50"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_2.gd" id="1_t5qwr"]
 [ext_resource type="PackedScene" uid="uid://bmp8rqjmp75f3" path="res://nodes/player.tscn" id="1_uo1gn"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c6osiv5wu5uxb" path="res://nodes/map/street/mailbox.tscn" id="7_paoxb"]
 [ext_resource type="Texture2D" uid="uid://3id8xoguugmp" path="res://resources/sprites/trash_can.png" id="7_q83d8"]
 [ext_resource type="Texture2D" uid="uid://dkb42t0l4wkl0" path="res://resources/sprites/barricade.png" id="8_nvbjb"]
+[ext_resource type="Texture2D" uid="uid://dw0koehxc5mfd" path="res://resources/sprites/eyes_opening.png" id="10_24xhv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k4a04"]
 size = Vector2(1278, 231)
@@ -144,11 +145,63 @@ _data = {
 "fade_out": SubResource("Animation_stw53")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_pwaj7"]
+atlas = ExtResource("10_24xhv")
+region = Rect2(0, 0, 72, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2n4b"]
+atlas = ExtResource("10_24xhv")
+region = Rect2(72, 0, 72, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qu2oa"]
+atlas = ExtResource("10_24xhv")
+region = Rect2(144, 0, 72, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_06f6b"]
+atlas = ExtResource("10_24xhv")
+region = Rect2(216, 0, 72, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adein"]
+atlas = ExtResource("10_24xhv")
+region = Rect2(288, 0, 72, 22)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ht18v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pwaj7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pwaj7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pwaj7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pwaj7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x2n4b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qu2oa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_06f6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adein")
+}],
+"loop": false,
+"name": &"open",
+"speed": 10.0
+}]
+
 [node name="Level2" type="Node2D"]
 script = ExtResource("1_t5qwr")
 
 [node name="Player" parent="." instance=ExtResource("1_uo1gn")]
-position = Vector2(-273, 82)
+position = Vector2(727, 82)
 
 [node name="Camera2D" type="Camera2D" parent="Player" groups=["Camera"]]
 offset = Vector2(0, -74)
@@ -327,8 +380,10 @@ collision_layer = 0
 position = Vector2(3.5, -10)
 shape = SubResource("RectangleShape2D_34a2p")
 
-[node name="FadeTransition" type="Node" parent="."]
+[node name="FadeTransition" type="Control" parent="."]
 process_mode = 3
+layout_mode = 3
+anchors_preset = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="FadeTransition"]
 libraries = {
@@ -336,8 +391,17 @@ libraries = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="FadeTransition"]
-offset_left = -1429.0
-offset_top = -365.0
-offset_right = -788.0
-offset_bottom = 27.0
+offset_left = -1849.0
+offset_top = -378.0
+offset_right = -1208.0
+offset_bottom = 14.0
+scale = Vector2(1.84246, 1.49122)
 color = Color(0, 0, 0, 1)
+
+[node name="Eyes" type="AnimatedSprite2D" parent="."]
+process_mode = 3
+z_index = -1
+position = Vector2(674, -51)
+scale = Vector2(0.64, 0.64)
+sprite_frames = SubResource("SpriteFrames_ht18v")
+animation = &"open"

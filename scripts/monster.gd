@@ -55,8 +55,6 @@ func game_over():
 	get_tree().change_scene_to_file("res://nodes/game_over_screen.tscn")
 
 func kill():
-	print("jajaja")
-	return
 	saw_player.emit()
 	animator.play("kill")
 	sprite.play("killing")

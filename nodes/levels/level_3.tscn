@@ -424,6 +424,35 @@ tracks/2/keys = {
 "update": 1,
 "values": [3]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("..:screenshakeMagnitude")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("..")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.1, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"toggle_player_movement"
+}, {
+"args": [],
+"method": &"toggle_player_movement"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_edp53"]
 _data = {
@@ -440,8 +469,10 @@ size = Vector2(41, 27)
 [node name="Level3" type="Node2D"]
 script = ExtResource("1_j883f")
 
-[node name="FadeTransition" type="Node" parent="."]
+[node name="FadeTransition" type="Control" parent="."]
 process_mode = 3
+layout_mode = 3
+anchors_preset = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="FadeTransition"]
 root_node = NodePath("../..")
@@ -450,21 +481,22 @@ libraries = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="FadeTransition"]
-offset_left = -1135.0
-offset_top = -249.0
-offset_right = -591.0
-offset_bottom = 128.0
+offset_left = -1638.0
+offset_top = -284.0
+offset_right = -1094.0
+offset_bottom = 93.0
+scale = Vector2(1.72581, 1.41617)
 color = Color(0, 0, 0, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_cgfca")]
-position = Vector2(140, 82)
+position = Vector2(-222, 82)
 
 [node name="Camera2D" type="Camera2D" parent="Player" groups=["Camera"]]
 offset = Vector2(0, -74)
 zoom = Vector2(4, 4)
 limit_left = -433
 limit_top = -44
-limit_right = 1680
+limit_right = 1780
 position_smoothing_speed = 55.0
 
 [node name="Road" type="Sprite2D" parent="."]
@@ -644,6 +676,9 @@ position = Vector2(739, 88)
 
 [node name="Car7" parent="Cars" instance=ExtResource("5_3hpxu")]
 position = Vector2(1401, 88)
+
+[node name="Car8" parent="Cars" instance=ExtResource("5_3hpxu")]
+position = Vector2(1694, 88)
 
 [node name="Mailboxes" type="Node2D" parent="."]
 

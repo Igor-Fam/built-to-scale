@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://da3h2b2i2e7b7"]
+[gd_scene load_steps=11 format=3 uid="uid://da3h2b2i2e7b7"]
 
+[ext_resource type="Script" path="res://scripts/levels/level.gd" id="1_dcf1d"]
 [ext_resource type="PackedScene" uid="uid://bmp8rqjmp75f3" path="res://nodes/player.tscn" id="2_j58ce"]
 [ext_resource type="PackedScene" uid="uid://bmnlg4ncy3smt" path="res://nodes/map/indoors/window.tscn" id="3_dtvuw"]
 [ext_resource type="PackedScene" uid="uid://b0htduxpxdwmi" path="res://nodes/map/indoors/elevator.tscn" id="4_arcwv"]
@@ -10,7 +11,130 @@ size = Vector2(334.75, 23.4375)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rljmj"]
 size = Vector2(20, 74)
 
+[sub_resource type="Animation" id="Animation_q5wy5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeTransition/ColorRect:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FadeTransition/ColorRect:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mxjy2"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeTransition/ColorRect:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FadeTransition/ColorRect:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"center_fade_rect"
+}, {
+"args": [],
+"method": &"pause_or_resume"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_7rdm0"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeTransition/ColorRect:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FadeTransition/ColorRect:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"center_fade_rect"
+}, {
+"args": [],
+"method": &"pause_or_resume"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w45io"]
+_data = {
+"RESET": SubResource("Animation_q5wy5"),
+"fade_in": SubResource("Animation_mxjy2"),
+"fade_out": SubResource("Animation_7rdm0")
+}
+
 [node name="Level4" type="Node2D"]
+script = ExtResource("1_dcf1d")
 
 [node name="Player" parent="." instance=ExtResource("2_j58ce")]
 position = Vector2(-24, 6)
@@ -82,6 +206,22 @@ position = Vector2(209, -12)
 [node name="Elevator" parent="." instance=ExtResource("4_arcwv")]
 position = Vector2(260, -3)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." groups=["Camera"]]
 position = Vector2(125, 0)
 zoom = Vector2(4, 4)
+
+[node name="FadeTransition" type="Node" parent="."]
+process_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FadeTransition"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_w45io")
+}
+
+[node name="ColorRect" type="ColorRect" parent="FadeTransition"]
+offset_left = -1135.0
+offset_top = -249.0
+offset_right = -591.0
+offset_bottom = 128.0
+color = Color(0, 0, 0, 1)

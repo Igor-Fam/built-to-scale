@@ -10,6 +10,7 @@ enum states{
 }
 
 signal slept
+signal entered_door
 
 const SPEED = 70.0
 const JUMP_VELOCITY = -180.0
@@ -46,7 +47,7 @@ func move_state(delta):
 			return
 		
 		if(selectedObject is Door):
-			GameController.load_next_level()
+			entered_door.emit()
 			return
 	
 	# Add the gravity.

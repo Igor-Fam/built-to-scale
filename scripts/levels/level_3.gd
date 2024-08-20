@@ -12,9 +12,10 @@ func level_ready():
 	monster.saw_player.connect(_on_monster_saw_player)
 
 func _physics_process(delta):
-	var monsterMovingSameDirection = (monsterHolder.global_position.x < player.global_position.x) == (monsterAnimator.current_animation_position > 8)
-	if(monsterAnimator.current_animation == "search" && monsterMovingSameDirection || player.velocity.x == 0):
-		monsterHolder.global_position.x = lerp(monsterHolder.global_position.x, player.global_position.x, 0.03)
+	if(monsterAnimator.current_animation == "search"):
+		var monsterMovingSameDirection = (monsterHolder.global_position.x < player.global_position.x) == (monsterAnimator.current_animation_position > 8)
+		if(monsterMovingSameDirection || player.velocity.x == 0):
+			monsterHolder.global_position.x = lerp(monsterHolder.global_position.x, player.global_position.x, 0.03)
 	
 	if(isMonsterKilling):
 		monsterAnimator.play("kill")

@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Level
 
-@onready var animator: AnimationPlayer = $FadeTransition/AnimationPlayer
+@onready var fadeAnimator: AnimationPlayer = $FadeTransition/AnimationPlayer
 @onready var fadeColorRect: ColorRect = $FadeTransition/ColorRect
 @onready var camera: Camera2D = get_tree().get_first_node_in_group("Camera")
 @onready var player: Player = get_tree().get_first_node_in_group("Player")
@@ -15,8 +15,9 @@ var isMonsterKilling: bool = false
 
 func _ready():
 	get_tree().paused = true
-	animator.animation_finished.connect(_on_fade_animation_finished)
-	animator.play("fade_in")
+	fadeAnimator.animation_finished.connect(_on_fade_animation_finished)
+	fadeAnimator.play("fade_in")
+	player.entered_door.connect(_on_player_entered_door)
 	level_ready()
 
 func _process(delta):
@@ -49,6 +50,10 @@ func _on_fade_animation_finished(anim_name):
 	if(anim_name == "fade_out"):
 		GameController.load_next_level()
 
+func _on_player_entered_door():
+	fadeAnimator.play("fade_out")
+
 func shake_screen():
+	print(screenshakeMagnitude)
 	var rng = RandomNumberGenerator.new()
 	camera.position = Vector2(rng.randf_range(-screenshakeMagnitude, screenshakeMagnitude), rng.randf_range(-screenshakeMagnitude, screenshakeMagnitude))
