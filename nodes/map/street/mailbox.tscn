@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6osiv5wu5uxb"]
+
+[ext_resource type="Script" path="res://scripts/hiding_spot.gd" id="1_k7kur"]
+[ext_resource type="Texture2D" uid="uid://wwdbcxv73tkc" path="res://resources/sprites/mailbox.png" id="2_4y7ed"]
+[ext_resource type="Texture2D" uid="uid://b1uax3exuaudd" path="res://resources/sprites/hide_label.png" id="3_leb8g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tabxg"]
+size = Vector2(7, 11.9718)
+
+[node name="Mailbox" type="Area2D"]
+z_index = -2
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("1_k7kur")
+hidingAnimation = "hiding_behind"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_tabxg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 0
+texture = ExtResource("2_4y7ed")
+offset = Vector2(0.5, 0)
+
+[node name="HidingPosition" type="Marker2D" parent="."]
+position = Vector2(-1.49889, -1.45807)
+
+[node name="Label" type="Sprite2D" parent="."]
+visible = false
+z_index = 2
+position = Vector2(1, -11)
+texture = ExtResource("3_leb8g")

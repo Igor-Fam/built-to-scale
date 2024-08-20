@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://21i0b0lffdud"]
+
+[ext_resource type="Texture2D" uid="uid://diim8eahqnr7" path="res://resources/sprites/tall_building.png" id="1_nmrl0"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ylp73"]
+blend_mode = 1
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_6f5ct"]
+polygon = PackedVector2Array(-71, 24, 69, 24, 69, 72, -71, 72)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3q8rq"]
+size = Vector2(140, 130)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p1qod"]
+size = Vector2(61, 20)
+
+[node name="Building" type="Node2D"]
+z_index = -3
+z_as_relative = false
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+material = SubResource("CanvasItemMaterial_ylp73")
+position = Vector2(1, 0)
+occluder = SubResource("OccluderPolygon2D_6f5ct")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 0
+position = Vector2(0, -24)
+texture = ExtResource("1_nmrl0")
+offset = Vector2(-0.5, -0.5)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-0.44545, 48)
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.44545, 19)
+shape = SubResource("RectangleShape2D_3q8rq")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.94545, -56)
+shape = SubResource("RectangleShape2D_p1qod")

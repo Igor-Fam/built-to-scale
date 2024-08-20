@@ -1,0 +1,663 @@
+[gd_scene load_steps=26 format=3 uid="uid://bc568x6w681ds"]
+
+[ext_resource type="PackedScene" uid="uid://bmp8rqjmp75f3" path="res://nodes/player.tscn" id="1_cgfca"]
+[ext_resource type="Script" path="res://scripts/levels/level_3.gd" id="1_j883f"]
+[ext_resource type="Texture2D" uid="uid://c72hbnflxos55" path="res://resources/sprites/road_segment.png" id="2_xpam4"]
+[ext_resource type="PackedScene" uid="uid://21i0b0lffdud" path="res://nodes/map/street/building.tscn" id="3_wlw60"]
+[ext_resource type="Texture2D" uid="uid://c0yb5y2lu8aj0" path="res://resources/sprites/street_light.png" id="4_e84pe"]
+[ext_resource type="PackedScene" uid="uid://beexjqg3j16ca" path="res://nodes/map/street/car.tscn" id="5_3hpxu"]
+[ext_resource type="PackedScene" uid="uid://c6osiv5wu5uxb" path="res://nodes/map/street/mailbox.tscn" id="6_ppiyp"]
+[ext_resource type="Texture2D" uid="uid://3id8xoguugmp" path="res://resources/sprites/trash_can.png" id="7_5otpd"]
+[ext_resource type="Texture2D" uid="uid://dkb42t0l4wkl0" path="res://resources/sprites/barricade.png" id="8_2e2f6"]
+[ext_resource type="PackedScene" uid="uid://blchk1cx1n6vg" path="res://nodes/monster.tscn" id="10_5u2jr"]
+
+[sub_resource type="Animation" id="Animation_mxjy2"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeTransition/ColorRect:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FadeTransition/ColorRect:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"center_fade_rect"
+}, {
+"args": [],
+"method": &"pause_or_resume"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_q5wy5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeTransition/ColorRect:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FadeTransition/ColorRect:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7rdm0"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeTransition/ColorRect:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FadeTransition/ColorRect:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"center_fade_rect"
+}, {
+"args": [],
+"method": &"pause_or_resume"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w45io"]
+_data = {
+"RESET": SubResource("Animation_q5wy5"),
+"fade_in": SubResource("Animation_mxjy2"),
+"fade_out": SubResource("Animation_7rdm0")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k4a04"]
+size = Vector2(1278, 231)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lh4d1"]
+size = Vector2(6, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bp0da"]
+size = Vector2(16, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tcd45"]
+size = Vector2(27, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_10vyl"]
+size = Vector2(20, 55)
+
+[sub_resource type="Animation" id="Animation_1cmwg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(134, 202)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Path2D/PathFollow2D/Monster:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..:isScreenShaking")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("..:screenshakeMagnitude")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Path2D/PathFollow2D:progress_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../Buildings:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Path2D/PathFollow2D/Monster:enabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_xonrm"]
+resource_name = "search"
+length = 20.0
+loop_mode = 1
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path2D/PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5, 10, 15, 20),
+"transitions": PackedFloat32Array(2, 0.5, 2, 0.5, 2),
+"update": 0,
+"values": [1.0, 0.5, 0.0, 0.5, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_2ptya"]
+resource_name = "spawn"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1, 4.5),
+"transitions": PackedFloat32Array(0.450625, 0.450625),
+"update": 0,
+"values": [Vector2(100, 202), Vector2(96, 58)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Path2D/PathFollow2D/Monster:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1, 1.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..:isScreenShaking")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("..:screenshakeMagnitude")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("..")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"toggle_player_movement"
+}, {
+"args": [],
+"method": &"toggle_player_movement"
+}]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Path2D/PathFollow2D/Monster:enabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_q5jak"]
+resource_name = "kill"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Buildings:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.188235)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p5srk"]
+_data = {
+"RESET": SubResource("Animation_1cmwg"),
+"kill": SubResource("Animation_q5jak"),
+"search": SubResource("Animation_xonrm"),
+"spawn": SubResource("Animation_2ptya")
+}
+
+[sub_resource type="Curve2D" id="Curve2D_lasom"]
+_data = {
+"points": PackedVector2Array(-224.135, 316.869, 224.135, -316.869, -225, 6, 0, 0, 0, 0, 225, -2)
+}
+point_count = 2
+
+[node name="Level3" type="Node2D"]
+script = ExtResource("1_j883f")
+
+[node name="FadeTransition" type="Node" parent="."]
+process_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FadeTransition"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_w45io")
+}
+
+[node name="ColorRect" type="ColorRect" parent="FadeTransition"]
+offset_left = -1135.0
+offset_top = -249.0
+offset_right = -591.0
+offset_bottom = 128.0
+color = Color(0, 0, 0, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_cgfca")]
+position = Vector2(132, 79)
+
+[node name="Camera2D" type="Camera2D" parent="Player" groups=["Camera"]]
+offset = Vector2(0, -74)
+zoom = Vector2(4, 4)
+limit_left = -433
+limit_top = -44
+limit_right = 756
+position_smoothing_speed = 55.0
+
+[node name="Road" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(150, 112)
+texture = ExtResource("2_xpam4")
+offset = Vector2(0.5, 0.5)
+region_enabled = true
+region_rect = Rect2(-333.5, 0, 1378.21, 45)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Road"]
+visible = false
+position = Vector2(-18, -112)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Road/StaticBody2D"]
+position = Vector2(0, 205.5)
+shape = SubResource("RectangleShape2D_k4a04")
+
+[node name="Road2" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(1515, 112)
+texture = ExtResource("2_xpam4")
+offset = Vector2(0.5, 0.5)
+region_enabled = true
+region_rect = Rect2(-333.5, 0, 1378.21, 45)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Road2"]
+visible = false
+position = Vector2(-18, -112)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Road2/StaticBody2D"]
+position = Vector2(0, 205.5)
+shape = SubResource("RectangleShape2D_k4a04")
+
+[node name="Buildings" type="Node2D" parent="."]
+z_as_relative = false
+
+[node name="Building2" parent="Buildings" instance=ExtResource("3_wlw60")]
+position = Vector2(89, 19)
+
+[node name="Building4" parent="Buildings" instance=ExtResource("3_wlw60")]
+position = Vector2(481, 19)
+
+[node name="Building5" parent="Buildings" instance=ExtResource("3_wlw60")]
+position = Vector2(672, 19)
+
+[node name="Building6" parent="Buildings" instance=ExtResource("3_wlw60")]
+position = Vector2(1055, 18)
+
+[node name="Building7" parent="Buildings" instance=ExtResource("3_wlw60")]
+position = Vector2(1477, 18)
+
+[node name="StreetLights" type="Node2D" parent="."]
+
+[node name="StreetLight" type="Sprite2D" parent="StreetLights"]
+light_mask = 0
+z_index = -3
+z_as_relative = false
+position = Vector2(-26, 60)
+texture = ExtResource("4_e84pe")
+offset = Vector2(0.5, 0.5)
+
+[node name="StreetLight4" type="Sprite2D" parent="StreetLights"]
+light_mask = 0
+z_index = -3
+z_as_relative = false
+position = Vector2(130, 60)
+texture = ExtResource("4_e84pe")
+offset = Vector2(0.5, 0.5)
+
+[node name="StreetLight5" type="Sprite2D" parent="StreetLights"]
+light_mask = 0
+z_index = -3
+z_as_relative = false
+position = Vector2(320, 60)
+texture = ExtResource("4_e84pe")
+offset = Vector2(0.5, 0.5)
+
+[node name="StreetLight6" type="Sprite2D" parent="StreetLights"]
+light_mask = 0
+z_index = -3
+z_as_relative = false
+position = Vector2(583, 60)
+texture = ExtResource("4_e84pe")
+offset = Vector2(0.5, 0.5)
+
+[node name="StreetLight7" type="Sprite2D" parent="StreetLights"]
+light_mask = 0
+z_index = -3
+z_as_relative = false
+position = Vector2(739, 60)
+texture = ExtResource("4_e84pe")
+offset = Vector2(0.5, 0.5)
+
+[node name="StreetLight8" type="Sprite2D" parent="StreetLights"]
+light_mask = 0
+z_index = -3
+z_as_relative = false
+position = Vector2(898, 60)
+texture = ExtResource("4_e84pe")
+offset = Vector2(0.5, 0.5)
+
+[node name="StreetLight9" type="Sprite2D" parent="StreetLights"]
+light_mask = 0
+z_index = -3
+z_as_relative = false
+position = Vector2(1077, 60)
+texture = ExtResource("4_e84pe")
+offset = Vector2(0.5, 0.5)
+
+[node name="StreetLight10" type="Sprite2D" parent="StreetLights"]
+light_mask = 0
+z_index = -3
+z_as_relative = false
+position = Vector2(1248, 60)
+texture = ExtResource("4_e84pe")
+offset = Vector2(0.5, 0.5)
+
+[node name="StreetLight11" type="Sprite2D" parent="StreetLights"]
+light_mask = 0
+z_index = -3
+z_as_relative = false
+position = Vector2(1411, 60)
+texture = ExtResource("4_e84pe")
+offset = Vector2(0.5, 0.5)
+
+[node name="StreetLight12" type="Sprite2D" parent="StreetLights"]
+light_mask = 0
+z_index = -3
+z_as_relative = false
+position = Vector2(1411, 60)
+texture = ExtResource("4_e84pe")
+offset = Vector2(0.5, 0.5)
+
+[node name="StreetLight2" type="Sprite2D" parent="StreetLights"]
+light_mask = 0
+z_index = -3
+z_as_relative = false
+position = Vector2(-196, 61)
+texture = ExtResource("4_e84pe")
+offset = Vector2(0.5, 0.5)
+
+[node name="StreetLight3" type="Sprite2D" parent="StreetLights"]
+light_mask = 0
+z_index = -3
+z_as_relative = false
+position = Vector2(-412, 61)
+texture = ExtResource("4_e84pe")
+offset = Vector2(0.5, 0.5)
+
+[node name="Cars" type="Node2D" parent="."]
+
+[node name="Car" parent="Cars" instance=ExtResource("5_3hpxu")]
+position = Vector2(16, 88)
+
+[node name="Car2" parent="Cars" instance=ExtResource("5_3hpxu")]
+position = Vector2(259, 88)
+
+[node name="Car3" parent="Cars" instance=ExtResource("5_3hpxu")]
+position = Vector2(-177, 88)
+
+[node name="Car4" parent="Cars" instance=ExtResource("5_3hpxu")]
+position = Vector2(463, 88)
+
+[node name="Car5" parent="Cars" instance=ExtResource("5_3hpxu")]
+position = Vector2(693, 88)
+
+[node name="Mailboxes" type="Node2D" parent="."]
+
+[node name="Mailbox" parent="Mailboxes" instance=ExtResource("6_ppiyp")]
+position = Vector2(-44, 84)
+
+[node name="Mailbox2" parent="Mailboxes" instance=ExtResource("6_ppiyp")]
+position = Vector2(329, 84)
+
+[node name="Mailbox3" parent="Mailboxes" instance=ExtResource("6_ppiyp")]
+position = Vector2(607, 84)
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="TrashCan" type="Sprite2D" parent="Obstacles"]
+z_as_relative = false
+position = Vector2(59, 85)
+texture = ExtResource("7_5otpd")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Obstacles/TrashCan"]
+visible = false
+position = Vector2(0, 1)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/TrashCan/StaticBody2D"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_lh4d1")
+
+[node name="TrashCan2" type="Sprite2D" parent="Obstacles"]
+z_as_relative = false
+position = Vector2(537, 85)
+texture = ExtResource("7_5otpd")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Obstacles/TrashCan2"]
+visible = false
+position = Vector2(0, 1)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/TrashCan2/StaticBody2D"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_lh4d1")
+
+[node name="Barricade" type="Sprite2D" parent="Obstacles"]
+z_as_relative = false
+position = Vector2(213, 85)
+texture = ExtResource("8_2e2f6")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Obstacles/Barricade"]
+visible = false
+position = Vector2(0, 1)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/Barricade/StaticBody2D"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_bp0da")
+
+[node name="Goal" type="Area2D" parent="."]
+position = Vector2(754, 68)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal"]
+position = Vector2(3.5, -10)
+shape = SubResource("RectangleShape2D_tcd45")
+
+[node name="MonsterTrigger" type="Area2D" parent="."]
+position = Vector2(139, 75)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MonsterTrigger"]
+position = Vector2(0, -11.5)
+shape = SubResource("RectangleShape2D_10vyl")
+
+[node name="MonsterHolder" type="Node2D" parent="."]
+position = Vector2(134, 202)
+
+[node name="MonsterAnimator" type="AnimationPlayer" parent="MonsterHolder"]
+libraries = {
+"": SubResource("AnimationLibrary_p5srk")
+}
+
+[node name="Path2D" type="Path2D" parent="MonsterHolder"]
+curve = SubResource("Curve2D_lasom")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="MonsterHolder/Path2D"]
+position = Vector2(225, -2)
+rotation = 0.822598
+progress = 548.402
+rotates = false
+
+[node name="Monster" parent="MonsterHolder/Path2D/PathFollow2D" instance=ExtResource("10_5u2jr")]
+visible = false
+position = Vector2(2.93166, 2.72128)
+rotation = 0.92918
+
+[connection signal="body_entered" from="Goal" to="." method="_on_goal_body_entered"]
+[connection signal="body_entered" from="MonsterTrigger" to="." method="_on_monster_trigger_body_entered"]
+[connection signal="animation_finished" from="MonsterHolder/MonsterAnimator" to="." method="_on_monster_animation_finished"]

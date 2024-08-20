@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://bl5lqy75vgrpt"]
+
+[ext_resource type="Script" path="res://scripts/bed.gd" id="1_bwkhb"]
+[ext_resource type="Texture2D" uid="uid://c8l1vclyt5uid" path="res://resources/sprites/bed.png" id="2_vh0l4"]
+[ext_resource type="Texture2D" uid="uid://0qlnslelq7vt" path="res://resources/sprites/sleep_label.png" id="3_m3soy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ohttk"]
+size = Vector2(41, 19)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hthbo"]
+blend_mode = 1
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_vyu7n"]
+polygon = PackedVector2Array(-20, 6, -20, 5, 20, 5, 20, 6)
+
+[node name="Bed" type="Area2D"]
+z_index = 1
+z_as_relative = false
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("1_bwkhb")
+hidingAnimation = "hiding_under"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_ohttk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 0
+texture = ExtResource("2_vh0l4")
+offset = Vector2(0.5, 0.5)
+
+[node name="HidingPosition" type="Marker2D" parent="."]
+position = Vector2(0, -9)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+material = SubResource("CanvasItemMaterial_hthbo")
+occluder = SubResource("OccluderPolygon2D_vyu7n")
+
+[node name="Label" type="Sprite2D" parent="."]
+visible = false
+z_index = 2
+position = Vector2(1, -14)
+texture = ExtResource("3_m3soy")
